@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+
+<h2>Simple Leaflet Map in Django</h2>
+<div id="map" style="height: 600px;"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    var map = L.map('map').setView([40.7128, -74.0060], 11);  // NYC
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    {% for location in locations %}
+        L.marker([{{ location.latitude }}, {{ location.longitude }}])
+            .addTo(map)
+            .bindPopup("<b>{{ location.name }}</b>");
+    {% endfor %}
+</script>
+
+</body>
+</html>
